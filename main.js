@@ -2,7 +2,7 @@ function createTable() {
     var gameoflife = document.querySelector("#gameoflife");
   
     var table = document.createElement('TABLE');
-    table.style.border = "2px solid black"
+    table.style.border = "1px solid black"
   
     var tableBody = document.createElement('TBODY');
     table.appendChild(tableBody);
@@ -23,7 +23,15 @@ function createTable() {
 
    var button = document.createElement("BUTTON")
    button.textContent = "Start";
+   button.setAttribute("id", "start");
    gameoflife.appendChild(button); 
+
+   button = document.createElement("BUTTON")
+   button.textContent = "Pause";
+   button.setAttribute("id", "pause");
+   gameoflife.appendChild(button); 
+
+   
 
 }
 
@@ -36,7 +44,7 @@ function updateTable(board){
             let color = board[i][j].toString();
 
             if(color === "1")
-                color = "black";
+                color = "#293f50";
             else    
                 color = "white";
             
@@ -77,7 +85,32 @@ function neighbors(oldBoard, row, col){
 
 function advanced(board){
 
-    var oldBoard = board;
+    var oldBoard = [
+        [0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,1,0,1,0,0,0,0],
+        [0,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,1,0,1,0,0,0,0],
+        [0,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,0,1,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0]		 
+    ];
+
+    for(var i=0; i<18; i++){
+		for(var j=0; j<11; j++){
+			oldBoard[i][j] = board[i][j];
+		}
+	}
 
 	for(var i=1; i<17; i++){
 		for(var j=1; j<10; j++){
@@ -95,6 +128,7 @@ function advanced(board){
     return board;
 
 }
+
 
 document.addEventListener("DOMContentLoaded",function(){
 
@@ -123,13 +157,26 @@ document.addEventListener("DOMContentLoaded",function(){
 
     updateTable(board);
 
-    document.querySelector("button").addEventListener("click",function(){
+    var iteration;
 
-    board = advanced(board);
-
-    updateTable(board);
-
+    document.querySelector("#start").addEventListener("click",function(){    
+        document.querySelector("#start").disabled = true;
+        iteration = setInterval(function myTimer(){
+            board = advanced(board);
+            updateTable(board);
+        },350);
     });
+        
+
+    document.querySelector("#pause").addEventListener("click",function(){
+        document.querySelector("#start").disabled = false;
+        clearTimeout(iteration);
+    });
+
+
+
+
+
 
 
     
