@@ -15,7 +15,7 @@ function createTable() {
             var td = document.createElement('TD');
             td.appendChild(document.createTextNode(""));
             td.style.border = '1px solid black';
-            td.setAttribute("id", "index" + i.toString()+j.toString());
+            td.setAttribute("id", "cell" + i.toString()+j.toString());
             tr.appendChild(td);
         }
     }
@@ -48,7 +48,7 @@ function updateTable(board){
             else    
                 color = "white";
             
-            var element = document.querySelector("#index" + i.toString() + j.toString());
+            var element = document.querySelector("#cell" + i.toString() + j.toString());
 
             element.style.backgroundColor = color;
             
